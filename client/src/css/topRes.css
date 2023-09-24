@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:wght@400;700&display=swap');
+
+h1 {
+  font-family: 'Lobster Two', cursive !important;
+  font-size: 50px !important;
+  font-weight: bold !important;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px !important;
+}
+.resto {
+  display: flex;
+  width: 100%;
+  height: 200px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgb(45 51 63 / 20%);
+  position: relative;
+}
+.resto:hover {
+  transform: translateX(5px);
+  transition: .7s;
+}
+.resto::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50px;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient( to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 77%, rgba(255, 255, 255, 0.5) 92%, rgba(255, 255, 255, 0.0) 100%);
+  transform: skew(30deg);
+  opacity: 0;
+  transition: 1s;
+}
+
+.resto:hover::after {
+  animation: glass 0.7s linear ;
+}
+@keyframes glass {
+  0% {
+    left: 50px;
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}

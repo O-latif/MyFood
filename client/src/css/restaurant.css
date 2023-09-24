@@ -1,0 +1,104 @@
+.last {
+  position: relative;
+}
+.last::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.501);
+  cursor: pointer;
+}
+
+/* .last::before {
+  content: attr(data-content);
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translateX(50%) translateY(-50%);
+  font-size: 40px;
+  color: white;
+  z-index: 1;
+  cursor: pointer;
+} */
+.nothing {
+  display: none;
+}
+.fullH {
+  height: 100vh !important;
+}
+.flx {
+  width : 100%;
+  margin-top: 50px;
+  transform: translateX(15%);
+}
+/* .carousel-item.active {
+  display :flex !important;
+} */
+.dispNone {
+  display: none;
+}
+.dispBlok {
+  display: none;
+}
+.span {
+  position:absolute;
+  top : 50%;
+  right : 50%;
+  transform :  translateX(50%) translateY(-50%);
+  font-size :  40px;
+  color :  white;
+  cursor :  pointer;
+  z-index: 1;
+}
+
+
+@keyframes disp {
+  from {
+    /* right: -100%; */
+    opacity: 0;
+  }
+  to {
+    /* right: 0%; */
+    opacity: 1;
+  }
+}
+#crslBox {
+  animation-name: disp;
+  animation-duration: 0.8s;
+}
+.carousel-item.flx::before,
+.carousel-item.flx::after {
+  display: none;
+}
+.tag {
+  display: flex;
+  align-items: center;
+  margin: 7px 0;
+  margin-right: 10px;
+  padding: 5px 15px;
+  border: 1px solid #e91e63;
+  border-radius: 5px;
+  background-color: #e91e63;
+  white-space: nowrap;
+  color: white;
+  width: fit-content;
+  font-size: 15px;
+}
+.uper {
+  position: relative;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+.uper::after {
+  content : "";
+  background: #e91e63;
+  position : absolute;
+  display: block;
+  width: 56px;
+  height: 4px;
+  top: 0;
+  left: 0;
+}

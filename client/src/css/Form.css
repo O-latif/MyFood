@@ -1,0 +1,47 @@
+.containerT {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  height: fit-content;
+  flex-wrap: wrap;
+  border: 1px grey solid;
+  border-radius: 5px;
+  color: black;
+  padding: 10px;
+}
+
+.containerT input {
+  width: 100%;
+  min-width: 50%;
+  margin-top: 5px;
+  border-radius: 5px;
+  padding: 14px;
+  padding-left: 14px;
+}
+
+.containerT input:focus-visible {
+  outline-color: #e91e63;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  margin: 7px 0;
+  margin-right: 10px;
+  padding: 0 10px;
+  padding-right: 5px;
+  border: 1px solid #e91e63;
+  border-radius: 5px;
+  background-color: #e91e63;
+  white-space: nowrap;
+  color: white;
+}
+
+.tag button {
+  display: flex;
+  padding: 6px;
+  border: none;
+  background-color: unset;
+  cursor: pointer;
+  color: white;
+}
