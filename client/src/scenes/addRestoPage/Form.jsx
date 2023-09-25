@@ -117,7 +117,7 @@ const Form = () => {
     }
     
     const savedResResponse = await fetch(
-      "http://localhost:3002/addRestaurant",
+      "/addRestaurant",
       {
         method: "POST",
         body: new URLSearchParams(formDat),

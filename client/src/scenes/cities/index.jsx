@@ -2,6 +2,7 @@ import { Box,useTheme,Typography, Button } from "@mui/material";
 import NavBar from "scenes/navBar";
 import { useNavigate } from "react-router-dom";
 import Footer from "scenes/footer";
+import {Helmet} from "react-helmet";
 
 import { useEffect, useState } from "react";
 
@@ -10,11 +11,11 @@ const Cities = () => {
   const navigate = useNavigate();
   const {palette} = useTheme();
   
-  let url = 'http://localhost:3002/assets/';
+  let url = '/assets/';
   const [wilayas, setWilayas] = useState([]);
 
   const getWilayas = async () => {
-    const response = await fetch("http://localhost:3002/wil", {
+    const response = await fetch("/wil", {
       method: "GET",
     });
     const data = await response.json();
@@ -27,6 +28,11 @@ const Cities = () => {
   
   
   return <>
+  <Helmet>
+      <meta charSet="utf-8" />
+      <title>MyFood | Cities</title>
+      <link rel="canonical" href="http://example.com/example" />
+  </Helmet>
   <NavBar/>
   <Box 
     display={'flex'} 

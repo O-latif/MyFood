@@ -7,16 +7,22 @@ import FlexBetween from "components/FlexBetween";
 import { FaStar, FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import {Helmet} from "react-helmet";
 
 const HomePage = () => {
   const [margin, setMargin] = useState(0);
   const navigate = useNavigate();
   const {palette} = useTheme();
   const restos = useSelector((state) => state.restos);
-  let url = 'http://localhost:3002/assets/'
+  let url = '/assets/'
   
 
   return <Box>
+    <Helmet>
+        <meta charSet="utf-8" />
+        <title>MyFood | Home</title>
+        <link rel="canonical" href="http://example.com/example" />
+    </Helmet>
     <NavBar/>
     <Slider/>
     <Box width={'80%'} m={'30px auto'} p={'0 10px'} overflow={'hidden'}  position={'relative'}>

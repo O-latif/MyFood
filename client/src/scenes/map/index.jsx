@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Footer from "scenes/footer";
 import { GoogleMap,useLoadScript, MarkerF } from "@react-google-maps/api";
 // import { useEffect, useState } from "react";
-import '../../css/map.css'
+import '../../css/map.css';
+import {Helmet} from "react-helmet";
 
 
 const Map = () => {
@@ -14,6 +15,11 @@ const Map = () => {
   const {isLoaded} = useLoadScript({googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY});
   if (!isLoaded) return (<p>Loading ...</p>)
   return <>
+  <Helmet>
+      <meta charSet="utf-8" />
+      <title>MyFood | Map</title>
+      <link rel="canonical" href="http://example.com/example" />
+  </Helmet>
   <NavBar/>
   <Box>
   <div className="map">

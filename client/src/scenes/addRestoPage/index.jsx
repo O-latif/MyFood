@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import NavBar from "scenes/navBar";
 import Form from "./Form";
 import Footer from "scenes/footer";
-
+import {Helmet} from "react-helmet";
 
 
 const AddRestoPage = () =>{
@@ -26,6 +26,11 @@ const AddRestoPage = () =>{
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
   return <>
+    <Helmet>
+        <meta charSet="utf-8" />
+        <title>MyFood | Add Restaurant</title>
+        <link rel="canonical" href="http://example.com/example" />
+    </Helmet>
     <NavBar/>
     <Box
       width={isNonMobileScreens ? '80%' : '100%'}

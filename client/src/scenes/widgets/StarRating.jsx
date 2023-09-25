@@ -17,7 +17,7 @@ const StarRating = () => {
   
   
   const patchReview = async () => {
-    const response = await fetch(`http://localhost:3002/resto/review/${resId}`, {
+    const response = await fetch(`/resto/review/${resId}`, {
       method: "PATCH",
       headers: {
         // Authorization: `Bearer ${token}`,

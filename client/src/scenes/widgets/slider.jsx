@@ -13,7 +13,7 @@ const Slider = () => {
   // const token = useSelector((state) => state.token);
 
   const getRestos = async () => {
-    const response = await fetch("http://localhost:3002/resto", {
+    const response = await fetch("/resto", {
       method: "GET",
     });
     const data = await response.json();
@@ -45,7 +45,7 @@ const Slider = () => {
                 data-content={rest.name}
                 onClick={() => window.location.href =`http://localhost:3000/restaurant/${rest._id}`}
                 >
-                  <img src={`http://localhost:3002/assets/${rest.picturePath}`} className="d-block w-100" alt="..."  />
+                  <img src={`/assets/${rest.picturePath}`} className="d-block w-100" alt="..."  />
                 </div>
             )
           }

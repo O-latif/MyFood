@@ -1,5 +1,6 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from "./Form";
+import {Helmet} from "react-helmet";
 
 const LoginPage = () => {
   const theme = useTheme();
@@ -7,7 +8,14 @@ const LoginPage = () => {
   const primaryLight = theme.palette.primary.light;
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
+  
+
   return <Box>
+    <Helmet>
+        <meta charSet="utf-8" />
+        <title>MyFood | Login</title>
+        <link rel="canonical" href="http://example.com/example" />
+    </Helmet>
     <Box
       width={'100%'}
       padding={'1rem'}
