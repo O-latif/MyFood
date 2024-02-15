@@ -3,7 +3,7 @@ import NavBar from "scenes/navBar";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "scenes/footer";
 import { FaStar} from 'react-icons/fa';
-import {Helmet} from "react-helmet";
+import {Helmet,HelmetProvider} from "react-helmet-async";
 
 
 import { useEffect, useState } from "react";
@@ -13,11 +13,11 @@ const CityRestos = () => {
   const {palette} = useTheme();
   const isNonMobile = useMediaQuery("(min-width:1000px)");
 
-  let url = '/assets/';
+  let url = 'http://localhost:3002/assets/';
   const [restos, setRestos] = useState([]);
   const {name} = useParams();
   const getWilayaRestos = async () => {
-    const response = await fetch(`/wil/${name}`, {
+    const response = await fetch(`http://localhost:3002/wil/${name}`, {
       method: "GET",
     });
     const data = await response.json();
@@ -27,11 +27,11 @@ const CityRestos = () => {
   useEffect(()=> {getWilayaRestos()}, []);
 
   return <>
-    <Helmet>
-        <meta charSet="utf-8" />
-        <title>MyFood | {name}'s Restaurants</title>
-        <link rel="canonical" href="http://example.com/example" />
-    </Helmet>
+    <HelmetProvider>
+      <Helmet>
+          <title>MyFood | {name}'s Restaurants</title>
+      </Helmet>
+    </HelmetProvider>
   <NavBar/>
   <Box 
     display={'flex'} 

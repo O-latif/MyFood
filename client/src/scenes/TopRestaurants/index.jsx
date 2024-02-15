@@ -7,21 +7,21 @@ import Footer from "scenes/footer";
 import { FaStar } from 'react-icons/fa';
 import { useSelector } from "react-redux";
 import '../../css/topRes.css';
-import {Helmet} from "react-helmet";
+import {Helmet, HelmetProvider} from "react-helmet-async";
 
 const TopRestaurants = () => {
   const navigate = useNavigate();
   const {palette} = useTheme();
   const restos = useSelector((state) => state.restos);
-  let url = '/assets/'
+  let url = 'http://localhost:3002/assets/'
   
 
   return <Box>
-    <Helmet>
-        <meta charSet="utf-8" />
-        <title>MyFood | Top Restaurants</title>
-        <link rel="canonical" href="http://example.com/example" />
-    </Helmet>
+    <HelmetProvider>
+      <Helmet>
+          <title>MyFood | Top Restaurants</title>
+      </Helmet>
+    </HelmetProvider>
     <NavBar/>
     <Box width={'80%'} m={'30px auto'} p={'0 10px'} overflow={'hidden'}>
       

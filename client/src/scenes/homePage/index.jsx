@@ -7,29 +7,30 @@ import FlexBetween from "components/FlexBetween";
 import { FaStar, FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import {Helmet} from "react-helmet";
+import {Helmet, HelmetProvider} from "react-helmet-async";
 
 const HomePage = () => {
   const [margin, setMargin] = useState(0);
   const navigate = useNavigate();
   const {palette} = useTheme();
   const restos = useSelector((state) => state.restos);
-  let url = '/assets/'
+  let url = 'http://localhost:3002/assets/'
   
-
+  
   return <Box>
-    <Helmet>
-        <meta charSet="utf-8" />
-        <title>MyFood | Home</title>
-        <link rel="canonical" href="http://example.com/example" />
-    </Helmet>
+    <HelmetProvider>
+      <Helmet>
+          <title>MyFood | Home</title>
+      </Helmet>
+    </HelmetProvider>
     <NavBar/>
     <Slider/>
     <Box width={'80%'} m={'30px auto'} p={'0 10px'} overflow={'hidden'}  position={'relative'}>
       <FlexBetween mb={'20px'}>
         <Typography fontSize={'20px'}>Best Restaurants</Typography>
         <Button
-          sx={{p : '5px 10px', border:`1px solid ${palette.primary.main}`, borderRadius:'20px'}}
+          sx= {{p : '5px 10px', border:`1px solid ${palette.primary.main}`, borderRadius:'20px'}}
+          onClick={()=> navigate("/TopRestaurants")}
         >
           See All
         </Button>
@@ -74,7 +75,7 @@ const HomePage = () => {
                   minWidth={'300px'} 
                   height={'335px'} 
                   borderRadius={'5px'} 
-                  key={i}
+                  key={i.toString()}
                   boxShadow={'0 2px 4px rgb(45 51 63 / 20%);'} 
                   onClick={() => window.location.href =`http://localhost:3000/restaurant/${rest._id}`}
                   sx={{
@@ -158,5 +159,6 @@ const HomePage = () => {
     </Box>
     <Footer/>
   </Box>
+
 }
 export default HomePage;

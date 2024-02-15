@@ -10,19 +10,19 @@ import { FaStar } from 'react-icons/fa';
 import '../../css/StarRating.css';
 import { useNavigate } from "react-router-dom";
 import Footer from "scenes/footer";
-import {Helmet} from "react-helmet";
+import {Helmet, HelmetProvider} from "react-helmet-async";
 
 
 
 
 const images = [
-  { src: '/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 1' },
-  { src: '/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 2' },
-  { src: '/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 3' },
-  { src: '/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 4' },
-  { src: '/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 5' },
-  { src: '/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 6' },
-  { src: '/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 7' },
+  { src: 'http://localhost:3002/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 1' },
+  { src: 'http://localhost:3002/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 2' },
+  { src: 'http://localhost:3002/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 3' },
+  { src: 'http://localhost:3002/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 4' },
+  { src: 'http://localhost:3002/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 5' },
+  { src: 'http://localhost:3002/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 6' },
+  { src: 'http://localhost:3002/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 7' },
 ];
 
 const Restaurant = () =>  {
@@ -60,7 +60,7 @@ const Restaurant = () =>  {
   };
 
   const getResto = async () => {
-    const response = await fetch(`/resto/${restoId}`, {
+    const response = await fetch(`http://localhost:3002/resto/${restoId}`, {
       method: "GET",
     });
     const data = await response.json();
@@ -74,7 +74,7 @@ const Restaurant = () =>  {
   useEffect(()=> {getResto()}, []);
   
   const patchReview = async () => {
-    const response = await fetch(`/resto/review/${restoId}`, {
+    const response = await fetch(`http://localhost:3002/resto/review/${restoId}`, {
       method: "PATCH",
       headers: {
         // Authorization: `Bearer ${token}`,
@@ -89,7 +89,7 @@ const Restaurant = () =>  {
   
 
   const postCom = async () => {
-    const response = await fetch(`/com/comment`, {
+    const response = await fetch(`http://localhost:3002/com/comment`, {
       method: "POST",
       headers: {
         // Authorization: `Bearer ${token}`,
@@ -110,7 +110,7 @@ const Restaurant = () =>  {
     if(item.city === resto.city && item._id !== resto._id) return item
   }
   const getCom = async () => {
-    const response = await fetch(`/com/comments`, {
+    const response = await fetch(`http://localhost:3002/com/comments`, {
       method: "GET",
     });
     const data = await response.json();
@@ -142,11 +142,11 @@ const Restaurant = () =>  {
   // console.log('all2 : ', allComments.length);
   
   return <Box>
-    <Helmet>
-        <meta charSet="utf-8" />
-        <title>MyFood | {resto.name} </title>
-        <link rel="canonical" href="http://example.com/example" />
-    </Helmet>
+    <HelmetProvider>
+      <Helmet>
+          <title>MyFood | {resto.name} </title>
+      </Helmet>
+    </HelmetProvider>
     {
       toggle && (
         <Box

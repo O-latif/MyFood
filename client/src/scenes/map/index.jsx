@@ -5,7 +5,7 @@ import Footer from "scenes/footer";
 import { GoogleMap,useLoadScript, MarkerF } from "@react-google-maps/api";
 // import { useEffect, useState } from "react";
 import '../../css/map.css';
-import {Helmet} from "react-helmet";
+import {Helmet, HelmetProvider} from "react-helmet-async";
 
 
 const Map = () => {
@@ -13,13 +13,21 @@ const Map = () => {
   const {palette} = useTheme();
 
   const {isLoaded} = useLoadScript({googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY});
-  if (!isLoaded) return (<p>Loading ...</p>)
+  if (!isLoaded) return (<>
+    <HelmetProvider>
+    <Helmet>
+        <title>MyFood | Map</title>
+    </Helmet>
+  </HelmetProvider>
+  <p>Loading ...</p>
+  </>
+  )
   return <>
-  <Helmet>
-      <meta charSet="utf-8" />
-      <title>MyFood | Map</title>
-      <link rel="canonical" href="http://example.com/example" />
-  </Helmet>
+  <HelmetProvider>
+    <Helmet>
+        <title>MyFood | Map</title>
+    </Helmet>
+  </HelmetProvider>
   <NavBar/>
   <Box>
   <div className="map">

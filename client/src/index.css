@@ -10,7 +10,8 @@ body,
 }
 
 
-.lighted:hover {
+.lighted:hover ,
+.active-tab {
   color: #e91e63 !important;
 }
 

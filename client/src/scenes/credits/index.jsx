@@ -2,7 +2,7 @@ import { Box,useTheme,Typography, Button } from "@mui/material";
 import NavBar from "scenes/navBar";
 import { useNavigate } from "react-router-dom";
 import Footer from "scenes/footer";
-import {Helmet} from "react-helmet";
+import {Helmet, HelmetProvider} from "react-helmet-async";
 
 
 
@@ -11,11 +11,11 @@ const Credits = () => {
   const {palette} = useTheme();
 
   return <>
-  <Helmet>
-        <meta charSet="utf-8" />
+  <HelmetProvider>
+    <Helmet>  
         <title>MyFood | Credit</title>
-        <link rel="canonical" href="http://example.com/example" />
     </Helmet>
+  </HelmetProvider>
   <NavBar/>
   <Box>
     <Typography variant="h1" width={'100%'} mt={'30px'}> Special Thank For : </Typography>

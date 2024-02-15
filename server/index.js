@@ -12,6 +12,7 @@ import authRoutes from "./routes/auth.js";
 import restoRoutes from "./routes/resto.js";
 import comRoutes from "./routes/com.js";
 import wilRoutes from "./routes/wilaya.js";
+import searchRoutes from "./routes/search.js";
 import Restaurant from "./models/Restaurant.js";
 import { wilayas } from "./data/index.js";
 import {addResto, getNewRestos} from "./controllers/resto.js";
@@ -32,15 +33,15 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
-app.use(express.static(path.join(__dirname, "./client/build")));
-app.get("*", function (_, res) {
-  res.sendFile(
-    path.join(__dirname, "./client/build/index.html"),
-    function (err) {
-      res.status(500).send(err);
-    }
-  );
-});
+// app.use(express.static(path.join(__dirname, "./client/build")));
+// app.get("*", function (_, res) {
+//   res.sendFile(
+//     path.join(__dirname, "./client/build/index.html"),
+//     function (err) {
+//       res.status(500).send(err);
+//     }
+//   );
+// });
 
 
 
@@ -50,13 +51,13 @@ const storage = multer.diskStorage({
     cb(null, "public/assets");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    cb(null, file.originalname + "_" + Date.now() + path.extname(file.originalname));
   },
 });
 const upload = multer({ storage });
 
 /* ROUTES WITH FILES */
-app.post("/addRestaurant", upload.single("picture[0]"), addResto);
+app.post("/addRestaurant",upload.single("picture"),addResto);
 
 
 /* ROUTES */
@@ -64,6 +65,7 @@ app.use("/auth", authRoutes);
 app.use("/resto", restoRoutes);
 app.use("/com", comRoutes);
 app.use("/wil",wilRoutes);
+app.use("/search",searchRoutes);
 app.get("/newest",getNewRestos)
 
 /* MONGOOSE SETUP */

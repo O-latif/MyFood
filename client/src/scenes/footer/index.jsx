@@ -48,7 +48,7 @@ const Footer = () => {
           <a href="/credits" style={{fontSize:'16px',color:'white', textDecoration:'none'}}>Credits</a>
         </li>
       </ul>
-      <Typography color='white'>&copy;2023 O.Latif | All Rights Reserved</Typography>
+      <Typography color='white'>&copy;2023 Fi_Tal | All Rights Reserved</Typography>
     </Box>
   )
 }

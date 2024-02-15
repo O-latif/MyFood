@@ -38,7 +38,8 @@ export const addResto = async(req, res) => {
     });
     const savedResto = await newRestaurant.save();
     res.status(201).json(savedResto);
-
+    // console.log('controller')
+    // res.status(201).json();
   } catch (err) {
     console.log(err.message)
     res.status(500).json({error: err.message})
@@ -52,6 +53,7 @@ export const getRestos = async (req, res) => {
     const restos = await Restaurant.find().sort({"moyen":-1});
     res.status(201).json(restos);
   } catch (err) {
+    console.log('message : ', err.message)
     res.status(404).json({message : err.message});
   }
 }
@@ -69,7 +71,7 @@ export const getNewRestos = async (req, res) => {
   }
 }
 
-/* GET RETAURANT */
+/* GET RETAURANT BY ID*/
 export const getResto = async (req,res) => {
   try {
     

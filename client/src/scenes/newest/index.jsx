@@ -5,18 +5,18 @@ import Footer from "scenes/footer";
 import { FaStar} from 'react-icons/fa';
 
 import { useEffect, useState } from "react";
-import {Helmet} from "react-helmet";
+import {Helmet, HelmetProvider} from "react-helmet-async";
 
 const Newest = () => {
   const navigate = useNavigate();
   const {palette} = useTheme();
   const isNonMobile = useMediaQuery("(min-width:1000px)");
   
-  let url = '/assets/';
+  let url = 'http://localhost:3002/assets/';
   const [restos, setRestos] = useState([]);
 
   const getNewestRestos = async () => {
-    const response = await fetch('/newest', {
+    const response = await fetch('http://localhost:3002/newest', {
       method: "GET",
     });
     const data = await response.json();
@@ -27,11 +27,11 @@ const Newest = () => {
   useEffect(()=> {getNewestRestos()}, []);
 
   return <>
-  <Helmet>
-      <meta charSet="utf-8" />
-      <title>MyFood | Newest Restaurants</title>
-      <link rel="canonical" href="http://example.com/example" />
-  </Helmet>
+  <HelmetProvider>
+    <Helmet>
+        <title>MyFood | Newest Restaurants</title>
+    </Helmet>
+  </HelmetProvider>
   <NavBar/>
   <Box 
     display={'flex'} 

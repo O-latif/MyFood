@@ -12,6 +12,7 @@ import {
   FormControl,
   useTheme,
   useMediaQuery,
+  TextField
 } from "@mui/material";
 import {
   Search,
@@ -25,10 +26,21 @@ import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 import './../../index.css';
+import { Formik } from "formik";
+import * as yup from "yup";
 
+const searchSchema = yup.object().shape({
+  search : yup.string() 
+});
+const initialValuesSearch = {
+  search : ""
+};
 
 const NavBar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
+  const [searchData, setSearchData] = useState('');
+  const [isSearched, setIsSearched] = useState(false);
+  const [resul, setResul] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user) || '';
@@ -44,6 +56,48 @@ const NavBar = () => {
   const alt = theme.palette.background.alt;
 
   const fullName = `${user.firstName} ${user.lastName}`;
+
+  const sear = async (value) => {
+    const searchResponse = await fetch("http://localhost:3002/sear", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({payload : value}),
+      mode:'no-cors'
+    });
+    const searchResult = await searchResponse.json();
+    setResul(searchResult);
+    console.log("vvv : ",resul)
+    
+  };
+  
+
+  // const SearchGet = async () => {
+  //   const response = await fetch("http://localhost:3002/resto/search", {
+  //     method: "GET",
+  //   });
+  //   const data = await response.json();
+  //   setSearchData(data);
+  //   console.log(searchData);
+  // }
+
+  const handleChange = event => {
+    
+    setSearchData(event.target.value);
+    sear(event.target.value);
+    if (event.target.value === '') {
+      setIsSearched(false);
+    } else {
+      setIsSearched(true);
+    }
+
+    console.log('value is:', event.target.value);
+  };
+
+  // const handleFormSubmit = async (values, onSubmitProps) => {
+  //   await sear(values, onSubmitProps);
+  //   // SearchGet()
+  // };
+  
 
   return <>
   <FlexBetween backgroundColor={alt}>
@@ -68,17 +122,58 @@ const NavBar = () => {
         
       
       {isNonMobileScreens && (
-        <FlexBetween
-          backgroundColor={neutralLight}
-          borderRadius="9px"
-          gap="3rem"
-          padding="0.1rem 1.5rem"
-        >
-          <InputBase placeholder="Search..." />
-          <IconButton>
-            <Search />
-          </IconButton>
-        </FlexBetween>
+        <Box position={'relative'}>
+          <FlexBetween
+            backgroundColor={neutralLight}
+            borderRadius="9px"
+            gap="3rem"
+            padding="0.1rem 1.5rem"
+          >
+            
+                  <form>
+                    <InputBase name='search' type='text' placeholder='Search ... '  onChange={handleChange} value={searchData}/>
+                    <IconButton onClick={() => sear(searchData)}>
+                      <Search/>
+                    </IconButton>
+                  </form>
+
+            
+          </FlexBetween>
+          <Box 
+            width={'100%'} 
+            height={'200px'} 
+            bgcolor={theme.palette.background.alt} 
+            position={'absolute'} 
+            zIndex={'3'}
+            borderBottom={'3px solid'}
+            borderColor={theme.palette.primary.main}
+            sx={{
+              overflowX:'hidden',
+              overflowY:'scroll',
+              '&::-webkit-scrollbar': {
+                width: '10px'
+              },
+              
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: theme.palette.primary.main,
+                outline: '1px solid slategrey'
+              },
+              display : `${isSearched ? 'block': 'none'}`
+              
+            }}
+            
+          >
+            <Box 
+              bgcolor={theme.palette.background.default}
+              borderTop={'1px solid'}
+              borderColor={theme.palette.primary.main}
+            >
+              <Typography
+                p={'10px'}
+              >La Plaza</Typography>
+            </Box>
+          </Box>
+        </Box>
       )}
     </FlexBetween>
     {/* DESKTOP NAV */}
@@ -89,19 +184,19 @@ const NavBar = () => {
           <div className="collapse navbar-collapse fullHeight" id="navbarNav">
             <ul className="navbar-nav fullHeight">
               <li className="nav-item fullHeight">
-                <a className="nav-link lighted" href="/Home" style={{fontSize:'16px', color:neutralNav}}>Home</a>
+                <a className= {document.title ===  ('MyFood | Home') ? "nav-link lighted active-tab" : "nav-link lighted"}  href="/Home" style={{fontSize:'16px', color:neutralNav}}>Home</a>
               </li>
               <li className="nav-item fullHeight">
-                <a className="nav-link lighted" href="/TopRestaurants" style={{fontSize:'16px', color:neutralNav}}>Top Restaurants</a>
+                <a className={document.title ===  ('MyFood | Top Restaurants') ? "nav-link lighted active-tab" : "nav-link lighted"} href="/TopRestaurants" style={{fontSize:'16px', color:neutralNav}}>Top Restaurants</a>
               </li>
               <li className="nav-item fullHeight">
-                <a className="nav-link lighted" href="/cities" style={{fontSize:'16px', color:neutralNav}}>Cities</a>
+                <a className={document.title ===  ('MyFood | Cities') ? "nav-link lighted active-tab" : "nav-link lighted"} href="/cities" style={{fontSize:'16px', color:neutralNav}}>Cities</a>
               </li>
               <li className="nav-item fullHeight">
-                <a className="nav-link lighted" href="/new" style={{fontSize:'16px', color:neutralNav}}>New</a>
+                <a className={document.title ===  ('MyFood | Newest Restaurants') ? "nav-link lighted active-tab" : "nav-link lighted"} href="/newest" style={{fontSize:'16px', color:neutralNav}}>New</a>
               </li>
               <li className="nav-item fullHeight">
-                <a className="nav-link lighted" href="/map" style={{fontSize:'16px', color:neutralNav}}>Map</a>
+                <a className={document.title ===  ('MyFood | Map') ? "nav-link lighted active-tab" : "nav-link lighted"} href="/map" style={{fontSize:'16px', color:neutralNav}}>Map</a>
               </li>
               <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === "dark" ? (
@@ -210,20 +305,20 @@ const NavBar = () => {
               )}
             </IconButton>
             <ul className="navbar-nav fullHeight"  style={{textAlign:'center'}}>
-              <li className="nav-item fullHeight">
-                <a className="nav-link lighted" href="#Articles" style={{fontSize:'18px', marginBottom:'5px'}}>Home</a>
+            <li className="nav-item fullHeight">
+                <a className= {document.title ===  ('MyFood | Home') ? "nav-link lighted active-tab" : "nav-link lighted"}  href="/Home" style={{fontSize:'16px', color:neutralNav}}>Home</a>
               </li>
               <li className="nav-item fullHeight">
-                <a className="nav-link lighted" href="#Articles" style={{fontSize:'18px', marginBottom:'5px'}}>Top Restaurants</a>
+                <a className={document.title ===  ('MyFood | Top Restaurants') ? "nav-link lighted active-tab" : "nav-link lighted"} href="/TopRestaurants" style={{fontSize:'16px', color:neutralNav}}>Top Restaurants</a>
               </li>
               <li className="nav-item fullHeight">
-                <a className="nav-link lighted" href="#Articles" style={{fontSize:'18px', marginBottom:'5px'}}>Cities</a>
+                <a className={document.title ===  ('MyFood | Cities') ? "nav-link lighted active-tab" : "nav-link lighted"} href="/cities" style={{fontSize:'16px', color:neutralNav}}>Cities</a>
               </li>
               <li className="nav-item fullHeight">
-                <a className="nav-link lighted" href="#Gallery" style={{fontSize:'18px', marginBottom:'5px'}}>New</a>
+                <a className={document.title ===  ('MyFood | Newest Restaurants') ? "nav-link lighted active-tab" : "nav-link lighted"} href="/newest" style={{fontSize:'16px', color:neutralNav}}>New</a>
               </li>
               <li className="nav-item fullHeight">
-                <a className="nav-link lighted" href="#Features" style={{fontSize:'18px', marginBottom:'5px'}}>Map</a>
+                <a className={document.title ===  ('MyFood | Map') ? "nav-link lighted active-tab" : "nav-link lighted"} href="/map" style={{fontSize:'16px', color:neutralNav}}>Map</a>
               </li>
               
                 {user === '' ? (

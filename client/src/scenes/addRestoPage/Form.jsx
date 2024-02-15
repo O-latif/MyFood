@@ -117,18 +117,19 @@ const Form = () => {
     }
     
     const savedResResponse = await fetch(
-      "/addRestaurant",
+      "http://localhost:3002/addRestaurant",
       {
         method: "POST",
-        body: new URLSearchParams(formDat),
+        body: formDat,
       }
     );
     const savedRes = await savedResResponse.json();
+    
     onSubmitProps.resetForm();
     
-    // if (savedRes) {
-    //   navigate('/home');
-    // }
+    if (savedRes) {
+      navigate('/home');
+    }
       
   };
 

@@ -1,6 +1,7 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from "./Form";
-import {Helmet} from "react-helmet";
+import {Helmet, HelmetProvider} from "react-helmet-async";
+
 
 const LoginPage = () => {
   const theme = useTheme();
@@ -11,11 +12,11 @@ const LoginPage = () => {
   
 
   return <Box>
-    <Helmet>
-        <meta charSet="utf-8" />
-        <title>MyFood | Login</title>
-        <link rel="canonical" href="http://example.com/example" />
-    </Helmet>
+    <HelmetProvider>
+      <Helmet>
+          <title>MyFood | Login</title>
+      </Helmet>
+    </HelmetProvider>
     <Box
       width={'100%'}
       padding={'1rem'}
