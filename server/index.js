@@ -12,7 +12,7 @@ import authRoutes from "./routes/auth.js";
 import restoRoutes from "./routes/resto.js";
 import comRoutes from "./routes/com.js";
 import wilRoutes from "./routes/wilaya.js";
-import searchRoutes from "./routes/search.js";
+
 import Restaurant from "./models/Restaurant.js";
 import { wilayas } from "./data/index.js";
 import {addResto, getNewRestos} from "./controllers/resto.js";
@@ -65,7 +65,7 @@ app.use("/auth", authRoutes);
 app.use("/resto", restoRoutes);
 app.use("/com", comRoutes);
 app.use("/wil",wilRoutes);
-app.use("/search",searchRoutes);
+
 app.get("/newest",getNewRestos)
 
 /* MONGOOSE SETUP */
