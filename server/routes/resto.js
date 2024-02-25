@@ -1,6 +1,6 @@
 import express from "express";
 import {getRestos, getResto, rateResto} from "../controllers/resto.js";
-import { search } from "../controllers/search.js";
+
 import Restaurant from "../models/Restaurant.js";
 
 const router = express.Router();
