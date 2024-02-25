@@ -13,11 +13,10 @@ const Slider = () => {
   // const token = useSelector((state) => state.token);
 
   const getRestos = async () => {
-    const response = await fetch("http://localhost:3002/resto", {
+    const response = await fetch("https://myfood-54i9.onrender.com/resto", {
       method: "GET",
     });
     const data = await response.json();
-    
     dispatch(setRestos({restos : data}));
     
   };
@@ -47,9 +46,9 @@ const Slider = () => {
                 className= {i === 0 ? "carousel-item active" : "carousel-item"} 
                 
                 data-content={rest.name}
-                onClick={() => window.location.href =`http:localhost:3000/restaurant/${rest._id}`}
+                onClick={() => window.location.href =`/restaurant/${rest._id}`}
                 >
-                  <img src={`http://localhost:3002/assets/${rest.picturePath}`} className="d-block w-100" alt="..."  />
+                  <img src={`https://myfood-54i9.onrender.com/assets/${rest.picturePath}`} className="d-block w-100" alt="..."  />
                 </div>
             )
           }

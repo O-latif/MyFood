@@ -117,7 +117,7 @@ const Form = () => {
     }
     
     const savedResResponse = await fetch(
-      "http://localhost:3002/addRestaurant",
+      "https://myfood-54i9.onrender.com/addRestaurant",
       {
         method: "POST",
         body: formDat,

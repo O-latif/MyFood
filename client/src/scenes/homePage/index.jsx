@@ -14,7 +14,7 @@ const HomePage = () => {
   const navigate = useNavigate();
   const {palette} = useTheme();
   const restos = useSelector((state) => state.restos);
-  let url = 'http://localhost:3002/assets/'
+  let url = 'https://myfood-54i9.onrender.com/assets/'
   
   
   return <Box>
@@ -77,7 +77,7 @@ const HomePage = () => {
                   borderRadius={'5px'} 
                   key={i.toString()}
                   boxShadow={'0 2px 4px rgb(45 51 63 / 20%);'} 
-                  onClick={() => window.location.href =`http://localhost:3000/restaurant/${rest._id}`}
+                  onClick={() => window.location.href =`/restaurant/${rest._id}`}
                   sx={{
                     transition:'0.3s',
                     '&:hover' : {

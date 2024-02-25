@@ -40,7 +40,7 @@ const NavBar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const [searchData, setSearchData] = useState('');
   const [isSearched, setIsSearched] = useState(false);
-  const [resul, setResul] = useState('');
+  const [resul, setResul] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user) || '';
@@ -58,27 +58,17 @@ const NavBar = () => {
   const fullName = `${user.firstName} ${user.lastName}`;
 
   const sear = async (value) => {
-    const searchResponse = await fetch("http://localhost:3002/sear", {
+    const searchResponse = await fetch("http://localhost:3002/resto/sear", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({payload : value}),
-      mode:'no-cors'
+      
     });
     const searchResult = await searchResponse.json();
     setResul(searchResult);
-    console.log("vvv : ",resul)
     
   };
   
-
-  // const SearchGet = async () => {
-  //   const response = await fetch("http://localhost:3002/resto/search", {
-  //     method: "GET",
-  //   });
-  //   const data = await response.json();
-  //   setSearchData(data);
-  //   console.log(searchData);
-  // }
 
   const handleChange = event => {
     
@@ -89,8 +79,6 @@ const NavBar = () => {
     } else {
       setIsSearched(true);
     }
-
-    console.log('value is:', event.target.value);
   };
 
   // const handleFormSubmit = async (values, onSubmitProps) => {
@@ -131,7 +119,7 @@ const NavBar = () => {
           >
             
                   <form>
-                    <InputBase name='search' type='text' placeholder='Search ... '  onChange={handleChange} value={searchData}/>
+                    <input variant='standard' name='search' type='text' placeholder='Search ... '  onChange={handleChange} style={{height:'36px', outline:'none', backgroundColor:'transparent',padding:'5px 10px', color:neutralNav, border:'none'}} />
                     <IconButton onClick={() => sear(searchData)}>
                       <Search/>
                     </IconButton>
@@ -140,14 +128,15 @@ const NavBar = () => {
             
           </FlexBetween>
           <Box 
-            width={'100%'} 
-            height={'200px'} 
+            width={'100%'}  
+            maxHeight='200px'
             bgcolor={theme.palette.background.alt} 
             position={'absolute'} 
             zIndex={'3'}
             borderBottom={'3px solid'}
             borderColor={theme.palette.primary.main}
             sx={{
+              height:'fit-content',
               overflowX:'hidden',
               overflowY:'scroll',
               '&::-webkit-scrollbar': {
@@ -168,9 +157,57 @@ const NavBar = () => {
               borderTop={'1px solid'}
               borderColor={theme.palette.primary.main}
             >
-              <Typography
-                p={'10px'}
-              >La Plaza</Typography>
+
+              { resul.length > 1 ? (
+                
+                resul.map(r => {
+                  return (<Box
+                            onClick={() => window.location.href = `/restaurant/${r._id}`}
+                            sx={{
+                              cursor:'pointer',
+                              transition:'0.3s',
+                              '&:hover':{
+                                bgcolor:alt
+                              }
+                              
+                            }}
+                          >
+                    <Typography
+                      p={'10px'}
+                      pb='3px'
+                      fontSize='16px'
+                    >
+                      {r.name}
+                    </Typography>
+                    <Box
+                      display='flex'
+                      flexDirection='row'
+                      pl='12px'
+                    >
+                      <Typography pt='5px' color={theme.palette.neutral.mediumMain}>
+                            Tags : 
+                        </Typography>
+                      {r.tags.map(t => {
+                        return (<>
+                          <Typography p={'5px 10px'} color={theme.palette.neutral.mediumMain}>
+                            {t}
+                          </Typography>
+                          
+                        </>
+                        )
+                      })}
+                    </Box> 
+                  </Box> 
+                  )
+                })) : (
+                  <Typography
+                    p={'10px'}
+                    pb='3px'
+                    fontSize='16px'
+                  > NO RESULTS FOUND</Typography>
+                )
+              }
+              
             </Box>
           </Box>
         </Box>

@@ -16,13 +16,13 @@ import {Helmet, HelmetProvider} from "react-helmet-async";
 
 
 const images = [
-  { src: 'http://localhost:3002/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 1' },
-  { src: 'http://localhost:3002/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 2' },
-  { src: 'http://localhost:3002/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 3' },
-  { src: 'http://localhost:3002/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 4' },
-  { src: 'http://localhost:3002/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 5' },
-  { src: 'http://localhost:3002/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 6' },
-  { src: 'http://localhost:3002/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 7' },
+  { src: 'https://myfood-54i9.onrender.com/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 1' },
+  { src: 'https://myfood-54i9.onrender.com/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 2' },
+  { src: 'https://myfood-54i9.onrender.com/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 3' },
+  { src: 'https://myfood-54i9.onrender.com/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 4' },
+  { src: 'https://myfood-54i9.onrender.com/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 5' },
+  { src: 'https://myfood-54i9.onrender.com/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 6' },
+  { src: 'https://myfood-54i9.onrender.com/assets/pirata-studio-film-qt6b5042lrw-unsplash.jpg', alt: 'Image 7' },
 ];
 
 const Restaurant = () =>  {
@@ -47,9 +47,10 @@ const Restaurant = () =>  {
   let link = '';
   // let allComments = [];
   // const token = useSelector((state) => state.token);
-  const loggedInUserId = useSelector((state) => state.user._id);
-  const userF = useSelector((state) => state.user.firstName);
-  const userL = useSelector((state) => state.user.lastName);
+  const loggedInUser = useSelector((state) => state.user)
+  const loggedInUserId = loggedInUser ? loggedInUser._id : "";
+  const userF = loggedInUser ? loggedInUser.firstName : "";
+  const userL = loggedInUser ? loggedInUser.lastName : "";
   const restos = useSelector((state) => state.restos);
 
   const restoId = window.location.pathname.split("/")[2];
@@ -60,7 +61,7 @@ const Restaurant = () =>  {
   };
 
   const getResto = async () => {
-    const response = await fetch(`http://localhost:3002/resto/${restoId}`, {
+    const response = await fetch(`https://myfood-54i9.onrender.com/resto/${restoId}`, {
       method: "GET",
     });
     const data = await response.json();
@@ -74,7 +75,7 @@ const Restaurant = () =>  {
   useEffect(()=> {getResto()}, []);
   
   const patchReview = async () => {
-    const response = await fetch(`http://localhost:3002/resto/review/${restoId}`, {
+    const response = await fetch(`https://myfood-54i9.onrender.com/resto/review/${restoId}`, {
       method: "PATCH",
       headers: {
         // Authorization: `Bearer ${token}`,
@@ -86,10 +87,9 @@ const Restaurant = () =>  {
     dispatch(setResto({ resto: updatedResto }));
   };
 
-  
 
   const postCom = async () => {
-    const response = await fetch(`http://localhost:3002/com/comment`, {
+    const response = await fetch(`https://myfood-54i9.onrender.com/com/comment`, {
       method: "POST",
       headers: {
         // Authorization: `Bearer ${token}`,
@@ -110,7 +110,7 @@ const Restaurant = () =>  {
     if(item.city === resto.city && item._id !== resto._id) return item
   }
   const getCom = async () => {
-    const response = await fetch(`http://localhost:3002/com/comments`, {
+    const response = await fetch(`https://myfood-54i9.onrender.com/com/comments`, {
       method: "GET",
     });
     const data = await response.json();
@@ -272,127 +272,131 @@ const Restaurant = () =>  {
       <Typography variant="h2" m={'20px 0'} textAlign={isNonMobileScreens ? 'left' : 'center'}>
         Tell Us What You Think about " {resto.name} "
       </Typography>
-      { !isIt && !commented ? (
-        <>
-          <Box
-            display={'flex'}
-            justifyContent={'center'}
-            m={'10px 0'}
-          >
+      {
+        loggedInUser ?  (!isIt && !commented) ? (
+          <>
             <Box
-            display={'flex'}
-            justifyContent={'center'}
-            flexWrap={'wrap'}
-          >
-            {[...Array(5)].map((star, i) => {
-              const value = i + 1;
-              return (
-                
-                  <label key={i}>
-                    <input 
-                      type="radio" 
-                      name="rating" 
-                      value={value} 
-                      onClick={()=> setRating(value)} 
-                    />
-                    <FaStar 
-                      className="star" 
-                      size={isNonMobileScreens ? 100 : 50} 
-                      color={value <= (hover || rating) ? '#ffc107' : '#e4e5e9'}
-                      onMouseEnter={()=>setHover(value)} 
-                      onMouseLeave={()=>setHover(null)}
-                    />
-                  </label>
-                )
-            })
-            }
-            <textarea 
-              name="review"
-              id="review" 
-              placeholder={'What Do You Think About This Restaurant ?'} 
-              style={{
-                width: '100%',
-                height: '150px',
-                padding: '12px 20px',
-                boxSizing: 'border-box',
-                border: '2px s,olid #ccc',
-                borderRadius: '4px',
-                backgroundColor: '#f8f8f8',
-                fontSize: '16px',
-                resize: 'none',
-                marginTop: '30px'
-              }}
-              value={review}
-              onChange={handleMessageChange}
-            />
-            <Box>
-              <Button
-                fullWidth
-                type="submit"
-                sx={{
-                  m: "2rem 0",
-                  p: "1rem",
-                  backgroundColor: palette.primary.main,
-                  color: 'white',
-                  "&:hover": {backgroundColor: palette.primary.light },
-                }}
-                onClick={()=> func()}
-              >
-                Submit
-              </Button>
-              
-            </Box>
-          </Box>
-          </Box>
-        </>
-      ) : (
-        <Typography
-          variant="h2"
-          fontWeight={'bold'}
-          fontSize={'25px'}
-          width={'100%'}
-          textAlign={'center'}
-          m={'40px 0'}
-        >
-          <Typography 
-            fontSize={'30px'} mb={'20px'}
-            textAlign={'center'}
-          >
-            🖤 Thank You For Sharing Your Review With Us 🖤
-          </Typography>
-
-          {
-            note >= 1 ? (
-              [...Array(5)].map((star, i) => {
+              display={'flex'}
+              justifyContent={'center'}
+              m={'10px 0'}
+            >
+              <Box
+              display={'flex'}
+              justifyContent={'center'}
+              flexWrap={'wrap'}
+            >
+              {[...Array(5)].map((star, i) => {
                 const value = i + 1;
                 return (
                   
                     <label key={i}>
                       <input 
                         type="radio" 
-                        disabled
                         name="rating" 
-                        value={rating} 
-                        
+                        value={value} 
+                        onClick={()=> setRating(value)} 
                       />
                       <FaStar 
                         className="star" 
                         size={isNonMobileScreens ? 100 : 50} 
-                        color={value <= (note) ? '#ffc107' : '#e4e5e9'}
+                        color={value <= (hover || rating) ? '#ffc107' : '#e4e5e9'}
                         onMouseEnter={()=>setHover(value)} 
                         onMouseLeave={()=>setHover(null)}
                       />
                     </label>
                   )
               })
-              
-            ) : (
-              <></>
-            )
-          }
-        </Typography>
-      )
-
+              }
+              <textarea 
+                name="review"
+                id="review" 
+                placeholder={'What Do You Think About This Restaurant ?'} 
+                style={{
+                  width: '100%',
+                  height: '150px',
+                  padding: '12px 20px',
+                  boxSizing: 'border-box',
+                  border: '2px s,olid #ccc',
+                  borderRadius: '4px',
+                  backgroundColor: '#f8f8f8',
+                  fontSize: '16px',
+                  resize: 'none',
+                  marginTop: '30px'
+                }}
+                value={review}
+                onChange={handleMessageChange}
+              />
+              <Box>
+                <Button
+                  fullWidth
+                  type="submit"
+                  sx={{
+                    m: "2rem 0",
+                    p: "1rem",
+                    backgroundColor: palette.primary.main,
+                    color: 'white',
+                    "&:hover": {backgroundColor: palette.primary.light },
+                  }}
+                  onClick={()=> func()}
+                >
+                  Submit
+                </Button>
+                
+              </Box>
+            </Box>
+            </Box>
+          </>
+        ) : (
+          <Typography
+            variant="h2"
+            fontWeight={'bold'}
+            fontSize={'25px'}
+            width={'100%'}
+            textAlign={'center'}
+            m={'40px 0'}
+          >
+            <Typography 
+              fontSize={'30px'} mb={'20px'}
+              textAlign={'center'}
+            >
+              🖤 Thank You For Sharing Your Review With Us 🖤
+            </Typography>
+  
+            {
+              note >= 1 ? (
+                [...Array(5)].map((star, i) => {
+                  const value = i + 1;
+                  return (
+                    
+                      <label key={i}>
+                        <input 
+                          type="radio" 
+                          disabled
+                          name="rating" 
+                          value={rating} 
+                          
+                        />
+                        <FaStar 
+                          className="star" 
+                          size={isNonMobileScreens ? 100 : 50} 
+                          color={value <= (note) ? '#ffc107' : '#e4e5e9'}
+                          onMouseEnter={()=>setHover(value)} 
+                          onMouseLeave={()=>setHover(null)}
+                        />
+                      </label>
+                    )
+                })
+                
+              ) : (
+                <></>
+              )
+            }
+          </Typography>
+        )
+  
+         : <Typography 
+         fontSize={'30px'} mb={'20px'}
+         textAlign={'center'}>You Have To Be LoggedIn to share your review !</Typography>
       }
       <hr width={'80%'}/>
       <Typography variant="h2" m={'20px 0'} textAlign={isNonMobileScreens ? 'left' : 'center'}>
@@ -449,8 +453,8 @@ const Restaurant = () =>  {
       <Box width={'100%'} mt={'40px'}>
         <div className="row row-cols-1 row-cols-md-3 g-4">
           {restos.filter(nearby).map((r, i) => (
-            <div className="col" key={i}>
-              <Typography display={'none'}>{ link = '/assets/' + r.picturePath  }</Typography>
+            <div className="col" key={i} onClick={() => window.location.href =`/restaurant/${r._id}`}>
+              <Typography display={'none'}>{ link = 'https://myfood-54i9.onrender.com/assets/' + r.picturePath  }</Typography>
               <div className="card">
                 <img src={link} className="card-img-top" alt={r.name} height={'200px'}/>
                 <Box className="card-body" bgcolor={palette.background.alt} color={palette.neutral.nav}>

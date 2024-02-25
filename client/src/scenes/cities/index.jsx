@@ -11,11 +11,11 @@ const Cities = () => {
   const navigate = useNavigate();
   const {palette} = useTheme();
   
-  let url = 'http://localhost:3002/assets/';
+  let url = 'https://myfood-54i9.onrender.com/assets/';
   const [wilayas, setWilayas] = useState([]);
 
   const getWilayas = async () => {
-    const response = await fetch("http://localhost:3002/wil", {
+    const response = await fetch("https://myfood-54i9.onrender.com/wil", {
       method: "GET",
     });
     const data = await response.json();
@@ -60,7 +60,7 @@ const Cities = () => {
                   boxShadow={'0 2px 4px rgb(45 51 63 / 20%);'} 
                   borderRadius={'5px'} 
                   key={i}
-                  onClick={() => window.location.href =`http://localhost:3000/cities/${wil.name}`}
+                  onClick={() => window.location.href =`https://myfood-54i9.onrender.com/cities/${wil.name}`}
                   sx={{
                     cursor:'pointer',
                     transition:'0.5s',

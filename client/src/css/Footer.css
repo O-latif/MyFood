@@ -9,7 +9,7 @@
   left: 0;
   width: 100%;
   height: 100px;
-  background-image: url(http://localhost:3002/assets/wave.svg);
+  background-image: url(https://myfood-54i9.onrender.com/assets/wave.svg);
   background-size: 400px 100px;
   animation: animateWaves 3s linear infinite;
 }

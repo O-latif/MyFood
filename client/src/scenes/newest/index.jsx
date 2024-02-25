@@ -12,11 +12,11 @@ const Newest = () => {
   const {palette} = useTheme();
   const isNonMobile = useMediaQuery("(min-width:1000px)");
   
-  let url = 'http://localhost:3002/assets/';
+  let url = 'https://myfood-54i9.onrender.com/assets/';
   const [restos, setRestos] = useState([]);
 
   const getNewestRestos = async () => {
-    const response = await fetch('http://localhost:3002/newest', {
+    const response = await fetch('https://myfood-54i9.onrender.com/newest', {
       method: "GET",
     });
     const data = await response.json();
@@ -62,7 +62,7 @@ const Newest = () => {
                   borderRadius={'5px'} 
                   key={i}
                   boxShadow={'0 2px 4px rgb(45 51 63 / 20%);'} 
-                  onClick={() => window.location.href =`http://localhost:3000/restaurant/${rest._id}`}
+                  onClick={() => window.location.href =`https://myfood-54i9.onrender.com/restaurant/${rest._id}`}
                   sx={{
                     cursor:'pointer',
                     position:'relative',
